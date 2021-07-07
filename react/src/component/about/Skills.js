@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => ({
   },
   fill: {
     height: "100%",
-    width: props => `${props.experience}%`,
+    width: props => `${props.proficiency}%`,
     background: "#0e7c80",
     position: "absolute",
     top: "0",
@@ -50,8 +50,8 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-function Skills({name, experience}) {
-  const props = {experience}
+function Skills({name, proficiency}) {
+  const props = {proficiency}
   const classes = useStyles(props)
   return (
       <div className={classes.bar}>
@@ -59,7 +59,7 @@ function Skills({name, experience}) {
           <div className={classes.tag}>
             <span>{name}</span></div>
         </div>
-        <span className={classes.percentage}>{experience}%</span>
+        <span className={classes.percentage}>{proficiency}%</span>
       </div>
   )
 }

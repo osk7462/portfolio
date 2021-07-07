@@ -5,46 +5,31 @@ import About from './component/about/About'
 import Project from './component/projects/Projects'
 import Contact from './component/contact/Contact'
 
-import {CssBaseline, Paper} from '@material-ui/core'
 
-import {ThemeProvider, createMuiTheme, makeStyles} from '@material-ui/core/styles'
-import {GlobalContext} from './ContextApi'
+import {Paper} from '@material-ui/core'
+import makeStyles from '@material-ui/core/styles/makeStyles'
 
-
+const useStyles = makeStyles(theme => ({
+  root: {
+    background: theme.palette.type === "light" 
+      ? theme.palette.userBackground.light 
+      : theme.palette.userBackground.dark,
+  }
+}))
 
 
 function App() {
-    const {darkMode} = GlobalContext()
-    const theme = createMuiTheme ({
-    palette: {
-      type: darkMode ? "dark": "light",
-      
-      userBackground: {
-        border: {
-          dark: 'black',
-          light: '#b2dfdb'
-        },
-        light: '#e0f2f1',
-        dark: '#424242'
-      }
-
-    }
-  })
-
-  const styles = {
-    background: theme.palette.type === "light" ? theme.palette.userBackground.light : theme.palette.userBackground.dark,
-  }
+    const classes = useStyles()
+  
   
   return (
-    <ThemeProvider theme={theme}>
-      <Paper style={styles}>
+      <Paper className={classes.root}>
         <Home />
         <Header />
         <About />
         <Project />
         <Contact />
       </Paper>
-    </ThemeProvider>
     
   )
 }

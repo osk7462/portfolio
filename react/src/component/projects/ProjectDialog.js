@@ -123,6 +123,7 @@ function ProjectDialog({openDetail, setOpenDetail}) {
         <div className={classes.slide}> 
           <img 
             src="https://lp-cms-production.imgix.net/news/2019/02/taj-mahal-monkey.jpg" 
+            alt="project"
            />
           <div className={classes.next}>
             <Button 
