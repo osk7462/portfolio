@@ -23,8 +23,8 @@ class Skill(models.Model):
     proficiency = models.IntegerField()
     profile = models.ForeignKey(
         Profile, on_delete=models.CASCADE, related_name='skills', default=1)
-    project = models.ForeignKey(
-        Project, on_delete=models.CASCADE, related_name='skills', blank=True, null=True)
+    project = models.ManyToManyField(
+        Project, related_name='project_skills', blank=True, null=True)
 
     class Meta:
         ordering = ('-proficiency', )

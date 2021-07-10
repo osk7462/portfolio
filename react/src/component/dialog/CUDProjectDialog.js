@@ -95,14 +95,42 @@ const InputButton = ({children, ...others}) => {
 }
 
 
+const slugify = (text) => {
+  return text.toString().toLowerCase()
+    .replace(/\s+/g, '-')   
+    .replace(/[^\w\-]+/g, '')   
+    .replace(/\-\-+/g, '-')         
+    .replace(/^-+/, '')           
+    .replace(/-+$/, ''); 
+}
 
-function ProjectDialog({open, setOpen}) {
-  const {profile, loading, setProfile} = GlobalContext()
+
+const typeOfAction = (action) => {
+
+  return action.type === 'UPDATE'
+}
+
+const getSelectedSkills = (action) => {
+  if (action.type === 'UPDATE') {
+    let skills = []
+    action.project.project_skills.forEach((skill) => {
+      skills.push(skill.name)
+    } )
+    return skills
+  } 
+  return []
+} 
+
+function CUDProjectDialog({open, setOpen, action}) {
+
   const {skills} = GlobalContext()
-  const[selectedSkills, setSelectedSkills] = React.useState([])
+  const[selectedSkills, setSelectedSkills] = React.useState(getSelectedSkills(action))
+  const [update, setupdate] = React.useState(typeOfAction(action))
+  const [project, setProject] = React.useState(action.project)
+
+
   const history = useHistory()
   const form = React.useRef(null)
-  const [image, setImage] = React.useState([])
 
   const classes = useStyles()
 
@@ -116,25 +144,28 @@ function ProjectDialog({open, setOpen}) {
     }
     setSelectedSkills(value)
   }
-
-  const handleImage = (e) => {
-    setImage(e.target.files)
-  }
   
-  console.log(image)
+  const handleChange = (e) => {
+    const {name, value} = e.target
+    
+    setProject(prevState => {
+      return {...prevState, [name]: value}
+    })
+
+
+  }
 
   const handleSubmit = e => {
     e.preventDefault()
     const formData = new FormData(form.current)
-    formData.append('slug', 'thisis_slug545')
-    // formData.append('skill', JSON.stringify([{name: 'djano'}]))
-    
-    // for(let pair of formData.entries()){
-    //   console.log(pair[0], pair[1])
-    //   // if (pair[0] === 'project_images') {
-    //   //   formData.append('images', pair[1].files[0])
-    //   // }
-    // }
+    formData.append('slug', slugify(formData.get('project')))
+    console.log(formData.get('images').name)
+    if (formData.get('images').name === "") {
+      formData.delete('images')
+    } else {
+      console.log('not Empty')
+    }
+
 
     const config = {
       headers: {
@@ -144,12 +175,19 @@ function ProjectDialog({open, setOpen}) {
         'Content-Type': 'multipart-form-data'
       }
     }
-    const url = `http://127.0.0.1:8000/projects/`
+    
 
-    axios.post(url, formData, config)
-    .then(response => console.log(response))
-    .catch(error => console.log(error))
-
+    if (update) {
+      const url = `http://127.0.0.1:8000/projects/${project.slug}/`
+      axios.patch(url, formData, config)
+      .then(response => console.log(response))
+      .catch(error => console.log(error))
+    } else {
+      const url = `http://127.0.0.1:8000/projects/`
+      axios.post(url, formData, config)
+      .then(response => console.log(response))
+      .catch(error => console.log(error))
+    }
   }
 
   return (
@@ -177,12 +215,24 @@ function ProjectDialog({open, setOpen}) {
                 <TextField 
                   fullWidth
                   name="project"
-                  label="project"  
+                  label="project"
+                  inputProps={
+                    update ? {
+                      value: project.project,
+                      onChange: handleChange
+                    } : undefined
+                  }  
                 />
                 <TextField 
                   fullWidth
                   name="name"
                   label="name"  
+                  inputProps={
+                    update ? {
+                      value: project.name,
+                      onChange: handleChange
+                    } : undefined
+                  }
                 />
                 <TextField 
                   fullWidth
@@ -190,11 +240,23 @@ function ProjectDialog({open, setOpen}) {
                   label="description"  
                   multiline
                   rows={5}
+                  inputProps={
+                    update ? {
+                      value: project.description,
+                      onChange: handleChange
+                    } : undefined
+                  }
                 />
                 <TextField 
                   fullWidth
                   name="link"
                   label="link"  
+                  inputProps={
+                    update ? {
+                      value: project.link,
+                      onChange: handleChange
+                    } : undefined
+                  }
                   
                 />
 
@@ -203,9 +265,9 @@ function ProjectDialog({open, setOpen}) {
                   <input 
                     type='file'
                     accept='image/*'
-                    name='project_images'
+                    name='images'
                     multiple={true}
-                    onChange={handleImage}
+                    
                   />
                 </InputButton>
                 
@@ -252,4 +314,4 @@ function ProjectDialog({open, setOpen}) {
   )
 }
 
-export default ProjectDialog
+export default CUDProjectDialog

@@ -21,20 +21,36 @@ class Projects(ModelViewSet):
         slug = self.kwargs.get('pk')
         return self.queryset.get(slug=slug)
 
-    def create(self, request):
-        
-        images = request.data.pop('project_images')
-        skills = request.data.pop('skills')
-        
+    def get_serializer_context(self):
+        context = super(Projects, self).get_serializer_context()
+        context.update({'user': self.request.user})
+        return context
 
-        serializer = ProjectSerializer(
-            data=request.data, user=request.user, images=images, skills=skills)
+    # def create(self, request):
+        # images = request.data.pop('project_images', [])
+        # skills = request.data.pop('skills', [])
 
-        if serializer.is_valid():
-            serializer.save()
-        else:
-            print('*'*50)
-            print(serializer.errors)
+        # serializer = ProjectSerializer(
+        #     data=request.data, user=request.user, images=images, skills=skills)
 
-        # print(request.data)
-        return Response('some')
+        # if serializer.is_valid():
+        #     serializer.save()
+        #     return Response(serializer.data)
+        # else:
+        #     return Response(serializer.errors)
+
+    # def partial_update(self, request, pk=None):
+    #     skills = request.data.getlist('skills', [])
+    #     images = request.data.getlist('project_images', [])
+    #     serializer=ProjectSerializer(
+    #         instance=self.queryset.filter(slug=pk)[0],
+    #          data=request.data, user=request.user,
+    #           images=images,
+    #           skills=skills,
+    #            partial=True,)
+
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data)
+    #     else:
+    #         return Response(serializer.errors)

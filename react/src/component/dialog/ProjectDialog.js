@@ -1,3 +1,4 @@
+
 import React from 'react'
 
 import {Dialog, Button, Divider} from '@material-ui/core'
@@ -127,7 +128,7 @@ function ProjectDialog(props) {
         >
         <div className={classes.slide}> 
           <img 
-            src={project_images[slideImage].image}
+            src={project_images.length ? project_images[slideImage].image : ''}
             alt="project"
            />
           <div className={classes.next}>

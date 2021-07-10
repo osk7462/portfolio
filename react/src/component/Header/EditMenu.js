@@ -14,7 +14,7 @@ import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
 
 // component
 import AboutDialog from '../dialog/AboutDialog'
-import ProjectDialog from '../dialog/AddProjectDialog'
+import CUDProjectDialog from '../dialog/CUDProjectDialog'
 
 const useStyles = makeStyles(theme =>({
   paper: {
@@ -68,9 +68,10 @@ const EditMenu = ({anchorEl, setAnchorEl}) => {
         open={aboutDialog}
         setOpen={setAboutDialog}
       />
-      <ProjectDialog 
+      <CUDProjectDialog 
         open={projectDialog}
         setOpen={setProjectDialog}
+        action={{type: 'ADD', project:{} }}
       />
     </>
   )

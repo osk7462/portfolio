@@ -4,6 +4,7 @@ import {Grid, Card, CardMedia, Typography, Button} from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 
 import ProjectDialog from '../dialog/ProjectDialog'
+import CUDProjectDialog from '../dialog/CUDProjectDialog'
 
 
 const useStyles = makeStyles(theme => ({
@@ -37,9 +38,10 @@ const useStyles = makeStyles(theme => ({
 
 
 function ProjectCard(props) {
-  const{project, project_images, skills} = props
+  const{project, project_images, project_skills} = props
   const [openDetail, setOpenDetail] = React.useState(false)
-  const styleProps = {image:project_images[0].image }
+  const [openEdit, setOpenEdit] = React.useState(false)
+  const styleProps = { image: project_images.length ?  project_images[0].image : ""}
   const classes = useStyles(styleProps)
 
   return (
@@ -52,12 +54,14 @@ function ProjectCard(props) {
         <div className={classes.cardHover}>
           <Typography variant="h6" style={{fontWeight: 800}}>{project}</Typography>
           <Typography variant="body1" color="secondary" style={{fontWeight: 400, marginTop: '10px'}}> 
-            {skills.map(skill => skill.name).join(' / ')}
+            {project_skills.map(skill => skill.name).join(' / ')}
           </Typography>
           <Button variant="outlined" color="primary" style={{marginTop: '50px'}} onClick={() => setOpenDetail(true)}>Learn more</Button>
+          <Button variant="outlined" color="secondary" style={{marginTop: '10px'}} onClick={() => setOpenEdit(true)}>Edit Project</Button>
         </div>
       </Card>
       <ProjectDialog openDetail={openDetail} setOpenDetail={setOpenDetail} {...props}/>
+      <CUDProjectDialog open={openEdit} setOpen={setOpenEdit} action={{type: 'UPDATE', project: props}} />
     </Grid>
   )
 }
