@@ -9,3 +9,4 @@ class  ProjectAdmin(admin.ModelAdmin):
 
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(ProjectImage)
+

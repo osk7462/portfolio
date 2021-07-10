@@ -13,8 +13,8 @@ import PersonIcon from '@material-ui/icons/Person';
 import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
 
 // component
-import Dialog from './Dialog'
-
+import AboutDialog from '../dialog/AboutDialog'
+import ProjectDialog from '../dialog/AddProjectDialog'
 
 const useStyles = makeStyles(theme =>({
   paper: {
@@ -26,14 +26,19 @@ const useStyles = makeStyles(theme =>({
 }))
 
 
+
 const EditMenu = ({anchorEl, setAnchorEl}) => {
-  const [openDialog, setOpenDialog] = React.useState(false)
+  const [aboutDialog, setAboutDialog] = React.useState(false)
+  const [projectDialog, setProjectDialog] = React.useState(false)
   const classes = useStyles()
 
-  const handleDialog = (e) => {
+  const handleDialog = (e, action) => {
     e.preventDefault()
     setAnchorEl(null)
-    setOpenDialog(true)
+    if (action === 'about')
+      setAboutDialog(true)
+    else if (action === 'project')
+      setProjectDialog(true)
   }
 
   return (
@@ -45,13 +50,13 @@ const EditMenu = ({anchorEl, setAnchorEl}) => {
         classes={{paper: classes.paper}}
       >
       <MenuList>
-        <MenuItem onClick={(e) => handleDialog(e)}>
+        <MenuItem onClick={(e) => handleDialog(e, 'about')}>
           <ListItemIcon>
             <PersonIcon color="secondary" />
             <Typography varian="inherit">ABOUT</Typography>
           </ListItemIcon>
         </MenuItem>
-        <MenuItem onClick={(e) => handleDialog(e)}>
+        <MenuItem onClick={(e) => handleDialog(e, 'project')}>
           <ListItemIcon>
             <LocalLibraryIcon color="secondary" />
             <Typography varian="inherit">PROJECT</Typography>
@@ -59,9 +64,13 @@ const EditMenu = ({anchorEl, setAnchorEl}) => {
         </MenuItem>
       </MenuList>
       </Menu>
-      <Dialog 
-        open={openDialog}
-        setOpen={setOpenDialog}
+      <AboutDialog 
+        open={aboutDialog}
+        setOpen={setAboutDialog}
+      />
+      <ProjectDialog 
+        open={projectDialog}
+        setOpen={setProjectDialog}
       />
     </>
   )

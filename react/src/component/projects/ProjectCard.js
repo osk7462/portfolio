@@ -3,7 +3,7 @@ import {Grid, Card, CardMedia, Typography, Button} from '@material-ui/core'
 
 import { makeStyles } from '@material-ui/styles'
 
-import ProjectDialog from './ProjectDialog'
+import ProjectDialog from '../dialog/ProjectDialog'
 
 
 const useStyles = makeStyles(theme => ({
@@ -11,11 +11,11 @@ const useStyles = makeStyles(theme => ({
     position: "relative",
 
     '& .MuiCardMedia-root': {
-      backgroundImage: "url(https://lp-cms-production.imgix.net/news/2019/02/taj-mahal-monkey.jpg)",
+      backgroundImage: styleProps => `url(${styleProps.image})`,
     },
     '&:hover': {
       '& .MuiCardMedia-root': {
-      backgroundImage: "none",
+      backgroundImage: 'none',
     },
       cursor: 'pointer',
 
@@ -32,26 +32,32 @@ const useStyles = makeStyles(theme => ({
   cardHover: {
     display: "none"
   },
+
 }))
 
 
-function ProjectCard() {
-  const classes = useStyles()
+function ProjectCard(props) {
+  const{project, project_images, skills} = props
   const [openDetail, setOpenDetail] = React.useState(false)
+  const styleProps = {image:project_images[0].image }
+  const classes = useStyles(styleProps)
+
   return (
     <Grid item xs={12} sm={4}>
       <Card className={classes.root}>
         <CardMedia
         style={{height: "280px"}}
-        src = "https://lp-cms-production.imgix.net/news/2019/02/taj-mahal-monkey.jpg"
+        component='div'
         />
         <div className={classes.cardHover}>
-          <Typography variant="h6" style={{fontWeight: 800}}>Project Name</Typography>
-          <Typography variant="body1" color="secondary" style={{fontWeight: 400, marginTop: '10px'}}>React / Django</Typography>
+          <Typography variant="h6" style={{fontWeight: 800}}>{project}</Typography>
+          <Typography variant="body1" color="secondary" style={{fontWeight: 400, marginTop: '10px'}}> 
+            {skills.map(skill => skill.name).join(' / ')}
+          </Typography>
           <Button variant="outlined" color="primary" style={{marginTop: '50px'}} onClick={() => setOpenDetail(true)}>Learn more</Button>
         </div>
       </Card>
-      <ProjectDialog openDetail={openDetail} setOpenDetail={setOpenDetail}/>
+      <ProjectDialog openDetail={openDetail} setOpenDetail={setOpenDetail} {...props}/>
     </Grid>
   )
 }

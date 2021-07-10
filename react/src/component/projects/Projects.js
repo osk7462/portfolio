@@ -3,6 +3,7 @@ import {makeStyles} from '@material-ui/core/styles'
 import {Typography, Tab, Tabs, Grid} from '@material-ui/core'
 import ProjectCard from './ProjectCard'
 import Container from '../muiComponent/Container'
+import {GlobalContext} from '../../ContextApi'
 
 
 
@@ -13,25 +14,60 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
+const tabs = [
+  'All',
+  'Django',
+  'python',
+  'java',
+
+]
 
 function Projects() {
   const classes = useStyles()
   const [currentTab, setCurrentTab] = React.useState(0)
+  const {projects,setProjects, loading} = GlobalContext()
+  const [tabProject, setTabProject] = React.useState(projects)
+
+  const handleChange = (e, value) => {
+    
+    setCurrentTab(value)
+
+    if (tabs[value] !== 'All') {
+      let tempProjects = []
+
+      projects.forEach(project => {
+        project.skills.forEach(item => {
+          if (item.name.toLowerCase() === tabs[value].toLowerCase() )
+            tempProjects.push(project)
+        })
+      })
+      setTabProject(tempProjects)
+    } else {
+      setTabProject(projects)
+    }
+  } 
+  
+  React.useEffect(() => {
+    setTabProject(projects)
+  }, [loading])
+
 
   return (
     <Container id="projects">
       <Typography variant="h3">Projects</Typography>
-      <Tabs value={currentTab} centered variant='standard' onChange={(e, value) => setCurrentTab(value)} className={classes.tabs}>
-        <Tab label="All" />
-        <Tab label="React" />
-        <Tab label="Django" />
-        <Tab label="java" />
+      <Tabs value={currentTab} centered variant='standard' onChange={(e, value) => handleChange(e, value)} className={classes.tabs}>
+        {
+          tabs.map((tab, index)=>{
+            return <Tab key={index} label={tab}/>
+          })
+        }
       </Tabs>
       <Grid container spacing={1} justify="center">
-        <ProjectCard />
-        <ProjectCard />
-        <ProjectCard />
-        <ProjectCard />
+        {tabProject.map(project => {
+          return (
+              <ProjectCard key={project.slug} {...project}/>
+          )
+        })}
       </Grid>
 
     </Container>

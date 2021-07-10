@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from projects.models import Project
 # Create your models here.
 
 
@@ -22,6 +23,8 @@ class Skill(models.Model):
     proficiency = models.IntegerField()
     profile = models.ForeignKey(
         Profile, on_delete=models.CASCADE, related_name='skills', default=1)
+    project = models.ForeignKey(
+        Project, on_delete=models.CASCADE, related_name='skills', blank=True, null=True)
 
     class Meta:
         ordering = ('-proficiency', )
