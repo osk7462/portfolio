@@ -128,7 +128,7 @@ function AboutDialog({open, setOpen}) {
   const handleNumber = (e, index) => { 
     const {value} = e.target
     const re = /^[0-9\b]+$/
-    if (value === '' || re.test(value) && value > 0 && value <= 100) {
+    if ((value === '' || re.test(value)) && value > 0 && value <= 100) {
       handleChange(e, index)
     }
   }

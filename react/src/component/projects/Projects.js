@@ -25,7 +25,7 @@ const tabs = [
 function Projects() {
   const classes = useStyles()
   const [currentTab, setCurrentTab] = React.useState(0)
-  const {projects,setProjects, loading} = GlobalContext()
+  const {projects, loading} = GlobalContext()
   const [tabProject, setTabProject] = React.useState(projects)
 
   const handleChange = (e, value) => {
