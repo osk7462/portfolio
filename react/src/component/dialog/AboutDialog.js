@@ -169,6 +169,29 @@ function AboutDialog({open, setOpen}) {
 
      let formData = new FormData(form.current)
     
+    
+
+    const skills = formData.getAll('skill_name')
+    const proficiency = formData.getAll('skill_proficiency')
+    
+    for (let i=0; i<skills.length; i++) {
+      formData.append('updated_skills', JSON.stringify({name: skills[i], proficiency: proficiency[i]}))
+    }
+
+    formData.delete('skill_name')
+    formData.delete('skill_proficiency')
+
+    if (formData.get('image').name === "") {
+      formData.delete('image')
+    } 
+    if (formData.get('resume').name === "") {
+      formData.delete('resume')
+    } 
+
+    for (let pair of formData.entries()) {
+      console.log(pair[0], pair[1])
+    }
+
     const config = {
       headers: {
         Authorization: localStorage.getItem('access_token')
@@ -186,16 +209,6 @@ function AboutDialog({open, setOpen}) {
       console.log(err)
     }) 
 
-
-  axiosInstance.patch(`about/${profileInput.id}/`, {
-    skills: [...profileInput.skills],
-  })
-  .then(response => setProfile(response.data))
-  .catch(err => {
-      error=true
-      console.log(err)
-    }) 
-
     if (!error)
       setOpen(false)
       history.push('/')
@@ -205,11 +218,10 @@ function AboutDialog({open, setOpen}) {
     e.preventDefault()
     axiosInstance.delete(`about/${id}/delete_skill/`)
     .then(response => {
-      if (response.status === 200) {
         let tempProfileInput = {...profileInput}
-        tempProfileInput.skills.splice(index)
+        tempProfileInput.skills.splice(index,1)
         setProfileInput(tempProfileInput)
-      }
+        console.log(response.data)
     })
     .catch(err => console.log(err))
   }
@@ -297,6 +309,7 @@ function AboutDialog({open, setOpen}) {
                     
                     return (
                         <div key={index}
+                          name='skill'
                           className={classes.skillRoot}
                         >
                           <TextField 

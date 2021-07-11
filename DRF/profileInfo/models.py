@@ -1,10 +1,33 @@
 from django.db import models
 from django.contrib.auth.models import User
-from projects.models import Project
 # Create your models here.
+import json
 
 
 class Profile(models.Model):
+
+    class ModelManager(models.Manager):
+
+        def update(self, instance, **kwargs):
+            updatee_skills = kwargs.pop('updated_skills', [])
+
+            instance.name = kwargs.get('name', instance.name)
+            instance.description = kwargs.get(
+                'description', instance.description)
+            instance.image = kwargs.get('image', instance.image)
+            instance.resume = kwargs.get('resume', instance.resume)
+
+            # let me delete all the skills related to this profile
+            for skill in instance.skills.all():
+                skill.delete()
+
+            # let me update skills
+            for skill in updatee_skills:
+                instance.skills.create(**json.loads(skill))
+
+            instance.save()
+            return instance
+
     name = models.CharField(max_length=50)
     image = models.ImageField(
         upload_to='profile/dp', default='profile/default.jpg')
@@ -13,6 +36,8 @@ class Profile(models.Model):
     description = models.TextField()
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, related_name='user', default=1)
+
+    objects = ModelManager()
 
     def __str__(self):
         return self.name
@@ -23,8 +48,6 @@ class Skill(models.Model):
     proficiency = models.IntegerField()
     profile = models.ForeignKey(
         Profile, on_delete=models.CASCADE, related_name='skills', default=1)
-    project = models.ManyToManyField(
-        Project, related_name='project_skills', blank=True, null=True)
 
     class Meta:
         ordering = ('-proficiency', )

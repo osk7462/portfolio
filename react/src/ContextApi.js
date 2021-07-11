@@ -34,10 +34,11 @@ export const AppProvider = ({children}) => {
   const [projects, setProjects] = React.useState([])
   const[skills, setSkills] = React.useState([])
 
-  const fetch = async () => {
-    axiosInstance
+  const  fetch = async () => {
+    await axiosInstance
     .get('about/')
     .then (response => {
+      console.log(response.data)
       setProfile({...response.data[0]})
       setSkills(response.data[0].skills)
       setLoading(false)
@@ -45,7 +46,7 @@ export const AppProvider = ({children}) => {
     .catch (error => {
       console.log("error loading profile", error)
     })
-    axiosInstance.get('projects/')
+    await axiosInstance.get('projects/')
     .then(response => {
       setLoading(true)
       setProjects(response.data)
