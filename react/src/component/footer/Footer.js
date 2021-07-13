@@ -70,18 +70,20 @@ function Footer() {
       <div className={classes.social}>
         <Button
           color="secondary"
-          // variant="outlined"
-        
+          onClick={() => window.open('https://www.facebook.com/osk7462')}
         >
           <FacebookIcon fontSize="large"/>
         </Button>
         <Button
           color="secondary"
+          onClick={() => window.open('https://www.linkedin.com/in/osk7462/')}
         >
           <LinkedInIcon fontSize="large"/>
         </Button>
         <Button
-          color="secondary"        > 
+          color="secondary"        
+          onClick={() => window.open('https://github.com/osk7462/')}
+        > 
           <GitHubIcon fontSize="large"/>
         </Button>
         <Button
