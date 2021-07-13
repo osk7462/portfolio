@@ -15,6 +15,10 @@ from pathlib import Path
 import os
 from django.conf import settings
 import django_heroku
+import environ
+
+
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,12 +28,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-5@5zym@h((_7+^2-@pe7me&jg+k#8hc(9ly!zt13y&j8jk$7sm'
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'https://demo-osk7462.herokuapp.com/',
+    'http://localhost:3000',
+    "https://osk7462.netlify.app/",
+]
 
 
 # Application definition
@@ -136,9 +144,23 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOWED_ORIGINS = [
-    # "http://localhost:3000",
-    "https://osk7462.netlify.app/",
+
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+    'Access-Control-Allow-Origin',
+]
+
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:3000",
+    "https://osk7462.netlify.app",
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
