@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/styles'
 
 import ProjectDialog from '../dialog/ProjectDialog'
 import CUDProjectDialog from '../dialog/CUDProjectDialog'
+import { GlobalContext } from '../../ContextApi'
 
 
 const useStyles = makeStyles(theme => ({
@@ -39,10 +40,12 @@ const useStyles = makeStyles(theme => ({
 
 function ProjectCard(props) {
   const{project, project_images, project_skills} = props
+  const {loggedIn} = GlobalContext()
   const [openDetail, setOpenDetail] = React.useState(false)
   const [openEdit, setOpenEdit] = React.useState(false)
   const styleProps = { image: project_images.length ?  project_images[0].image : ""}
   const classes = useStyles(styleProps)
+
 
   return (
     <Grid item xs={12} sm={4}>
@@ -57,7 +60,10 @@ function ProjectCard(props) {
             {project_skills.map(skill => skill.name).join(' / ')}
           </Typography>
           <Button variant="outlined" color="primary" style={{marginTop: '50px'}} onClick={() => setOpenDetail(true)}>Learn more</Button>
-          <Button variant="outlined" color="secondary" style={{marginTop: '10px'}} onClick={() => setOpenEdit(true)}>Edit Project</Button>
+          {
+            loggedIn &&
+            <Button variant="outlined" color="secondary" style={{marginTop: '10px'}} onClick={() => setOpenEdit(true)}>Edit Project</Button>
+          }
         </div>
       </Card>
       <ProjectDialog openDetail={openDetail} setOpenDetail={setOpenDetail} {...props}/>
