@@ -16,6 +16,9 @@ const useStyles = makeStyles(theme => ({
     position: "absolute",
     top: 0,
     marginTop: 10,
+    [theme.breakpoints.down('xs')]: {
+      top: theme.spacing(15)
+    },
   },
 
   dialogWidth: {

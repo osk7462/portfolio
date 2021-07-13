@@ -29,5 +29,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('about/', include('profileInfo.urls', namespace='profileInfo')),
     path('projects/', include('projects.urls', namespace='projects')),
+    path('contact/', include('contact.urls', namespace='contact'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-

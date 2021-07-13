@@ -34,8 +34,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'https://demo-osk7462.herokuapp.com/',
-    'http://localhost:3000',
-    "https://osk7462.netlify.app/",
+    # 'http://localhost:3000',
+    # "https://osk7462.netlify.app/",
 ]
 
 
@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'profileInfo',
     'projects',
+    'contact',
     'rest_framework_simplejwt',
     'django_cleanup'
 ]
@@ -216,5 +217,8 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
+
+
+
 
 django_heroku.settings(locals())
