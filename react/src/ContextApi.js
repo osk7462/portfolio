@@ -4,7 +4,7 @@ import axiosInstance from './axios'
 const AppContext = React.createContext()
 
 const getLoggedIn = () => {
-  if (localStorage.getItem('access_token') !== 'null')
+  if (localStorage.getItem('access_token') !== null)
     return true
   else 
     return false
@@ -33,12 +33,12 @@ export const AppProvider = ({children}) => {
   const[loading, setLoading] = React.useState(true)
   const [projects, setProjects] = React.useState([])
   const[skills, setSkills] = React.useState([])
+  const [loadProject, setLoadProject] = React.useState(false)
 
   const  fetch = async () => {
     await axiosInstance
     .get('about/')
     .then (response => {
-      console.log(response.data)
       setProfile({...response.data[0]})
       setSkills(response.data[0].skills)
       setLoading(false)
@@ -59,7 +59,7 @@ export const AppProvider = ({children}) => {
 
   React.useEffect(()=>{
     fetch()
-  },[])
+  },[loadProject])
 
 
   return <AppContext.Provider value={{
@@ -69,6 +69,7 @@ export const AppProvider = ({children}) => {
     loading, setLoading,
     projects, setProjects,
     skills, setSkills,
+    loadProject, setLoadProject,
     }}>
     {children}
   </AppContext.Provider>

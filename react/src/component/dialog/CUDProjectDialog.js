@@ -120,7 +120,7 @@ const getSelectedSkills = (action) => {
 
 function CUDProjectDialog({open, setOpen, action}) {
 
-  const {skills, setLoading} = GlobalContext()
+  const {skills, setLoadProject } = GlobalContext()
   const[selectedSkills, setSelectedSkills] = React.useState(getSelectedSkills(action))
   const [update, setupdate] = React.useState(typeOfAction(action))
   const [project, setProject] = React.useState(action.project)
@@ -154,10 +154,8 @@ function CUDProjectDialog({open, setOpen, action}) {
 
   const handleSubmit = e => {
     e.preventDefault()
-    setLoading(true)
     const formData = new FormData(form.current)
     formData.append('slug', slugify(formData.get('project')))
-    console.log(formData.get('images').name)
     if (formData.get('images').name === "") {
       formData.delete('images')
     }
@@ -171,25 +169,25 @@ function CUDProjectDialog({open, setOpen, action}) {
     }
 
     if (update) {
-      const url = `http://127.0.0.1:8000/projects/${project.slug}/`
+      const url = `https://osk7462-api.herokuapp.com/projects/${project.slug}/`
       axios.patch(url, formData, config)
-      .then(response => {})
+      .then(response => {setLoadProject(prevState => (!prevState))})
       .catch(error => console.log(error))
     } else {
-      const url = `http://127.0.0.1:8000/projects/`
+      const url = `https://osk7462-api.herokuapp.com/projects/`
       axios.post(url, formData, config)
-      .then(response => {})
+      .then(response => {setLoadProject(prevState => (!prevState))})
       .catch(error => console.log(error))
     }
-    // setOpen(false)
+    setOpen(false)
     // window.location.reload(true)
-    // history.push('/')
+    history.push('/')
   }
 
   const handleDelete = e => {
     e.preventDefault()
     axiosInstance.delete(`projects/${project.slug}/`)
-    .then(response => {})
+    .then(response => {setLoadProject(prevState => (!prevState))})
     .catch(error => console.log(error))
     setOpen(false)
     // window.location.reload(true)
@@ -292,8 +290,8 @@ function CUDProjectDialog({open, setOpen, action}) {
                       id: 'select-multiple-native',
                     }}
                   >
-                    {skills.map(skill => (
-                      <option key={skill.id} value={skill.name}>
+                    {skills.map((skill, index) => (
+                      <option key={index} value={skill.name}>
                         {skill.name}
                       </option>
                     ))}

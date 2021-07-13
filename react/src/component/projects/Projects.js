@@ -36,7 +36,7 @@ function Projects() {
       let tempProjects = []
 
       projects.forEach(project => {
-        project.skills.forEach(item => {
+        project.project_skills.forEach(item => {
           if (item.name.toLowerCase() === tabs[value].toLowerCase() )
             tempProjects.push(project)
         })

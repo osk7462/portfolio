@@ -200,7 +200,8 @@ function AboutDialog({open, setOpen}) {
         'Content-Type': 'multipart-form-data'
       }
     }
-    const url = `http://127.0.0.1:8000/about/${profileInput.id}/`
+    const url = `https://osk7462-api.herokuapp.com/about/$
+    {profileInput.id}/`
 
     axios.patch(url, formData, config)
     .then(response => setProfile(response.data))
