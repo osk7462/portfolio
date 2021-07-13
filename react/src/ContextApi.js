@@ -44,7 +44,8 @@ export const AppProvider = ({children}) => {
       setLoading(false)
     })
     .catch (error => {
-      console.log("error loading profile", error)
+      console.log("error loading profile", error.data)
+
     })
     await axiosInstance.get('projects/')
     .then(response => {

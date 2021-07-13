@@ -17,7 +17,6 @@ from django.conf import settings
 import django_heroku
 import environ
 
-
 environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -49,6 +48,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # for image storage
+    'cloudinary_storage',
+    'cloudinary',
 
     'rest_framework',
     'corsheaders',
@@ -101,7 +104,7 @@ DATABASES = {
 }
 
 
-# Password validation
+# Password validationcd
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -163,8 +166,17 @@ CORS_ORIGIN_WHITELIST = [
     "https://osk7462.netlify.app",
 ]
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUD_NAME'),
+    'API_KEY': os.environ.get('API_KEY'),
+    'API_SECRET': os.environ.get('API_SECRET'),
+}
+
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/portfolio/'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
