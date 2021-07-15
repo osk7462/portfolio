@@ -50,7 +50,10 @@ function ContactForm() {
   const handleSubmit = e => {
     e.preventDefault()
     axiosInstance.post('contact/', contactFormData)
-    .then(response => setErrors({...initialError}))
+    .then(response => {
+      setErrors({...initialError})
+      console.log(response)
+    })
     .catch(error => {
       error.response &&
       setErrors({...initialError, ...error.response.data})

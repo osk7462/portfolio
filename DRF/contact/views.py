@@ -12,7 +12,7 @@ class Contact(generics.CreateAPIView):
       serializer = ContactSerializer(data=request.data)
       if serializer.is_valid():
         serializer = serializer.save()
-        return Response({'data': 'success'})
+        return Response({'data': 'success'}, status=status.HTTP_200_OK)
       else:
         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         

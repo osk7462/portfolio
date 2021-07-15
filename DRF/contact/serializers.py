@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from django.core.mail import send_mail
+from django.core.mail import send_mail, BadHeaderError
 
 
 class ContactSerializer(serializers.Serializer):
@@ -14,4 +14,10 @@ class ContactSerializer(serializers.Serializer):
         email = self.validated_data.get('email', 'abcd@xyz.com')
         name = self.validated_data.get('name', 'unknow')
         message = self.validated_data.get('message', 'no message')
-        # send_mail(name, message, email, ['osk7462@gmail.com'])
+        try:
+            return send_mail(name + '<{}>'.format(email),
+             message, 'osk7462@gmail.com',
+            ['osk7462@gmail.com', 'ok554520@gmail.com'], 
+            fail_silently=False)
+        except BadHeaderError:
+            print(BadHeaderError)
