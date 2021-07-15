@@ -29,7 +29,7 @@ function About() {
       </Typography>
       <Grid
        container 
-       justify="space-around" 
+       justifyContent="space-around" 
        className={classes.component}
       >
         <Grid

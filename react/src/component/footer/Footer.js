@@ -15,7 +15,7 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import GitHubIcon from '@material-ui/icons/GitHub';
-import InstagramIcon from '@material-ui/icons/Instagram';
+import EmailIcon from '@material-ui/icons/Email';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -88,8 +88,9 @@ function Footer() {
         </Button>
         <Button
           color="secondary"
+          href={'mailto: osk7462@gmail.com'}
         >
-          <InstagramIcon fontSize="large" />
+          <EmailIcon fontSize="large" />
         </Button>
       </div>
 

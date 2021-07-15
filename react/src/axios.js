@@ -24,15 +24,15 @@ axiosInstance.interceptors.response.use(
 	},
 	async function (error) {
 		const originalRequest = error.config;
-		// if (typeof error.response === 'undefined') {
-		// 	alert(
-		// 		'A server/network error occurred. ' +
-		// 			'Looks like CORS might be the problem. ' +
-		// 			'Please refresh the page'
-		// 	);
-		// 	window.location('/').reload();
-		// 	return Promise.reject(error);
-		// }
+		if (typeof error.response === 'undefined') {
+			alert(
+				'A server/network error occurred. ' +
+					'Looks like CORS might be the problem. ' +
+					'Please refresh the page'
+			);
+			window.location('/').reload();
+			return Promise.reject(error);
+		}
 
 		if (
 			error.response.status === 401 &&
@@ -56,7 +56,7 @@ axiosInstance.interceptors.response.use(
 				const now = Math.ceil(Date.now() / 1000);
 				console.log(tokenParts.exp);
 
-				if (tokenParts.exp > now) {
+				if (tokenParts.exp < now) {
 					return axiosInstance
 						.post('/token/refresh/', { refresh: refreshToken })
 						.then((response) => {

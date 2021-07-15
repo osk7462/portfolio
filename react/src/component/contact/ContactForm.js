@@ -3,6 +3,8 @@ import React from 'react'
 import TextField from '@material-ui/core/TextField'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
+import Snackbar from '@material-ui/core/Snackbar'
+import MuiAlert from '@material-ui/lab/Alert';
 
 import makeStyles from '@material-ui/core/styles/makeStyles'
 
@@ -22,6 +24,32 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
+const Alert = (props) => {
+  return (
+    <MuiAlert elevation={6} variant="filled" {...props} />
+  )
+}
+
+
+const OpenSnackBar = ({open, setOpen}) => {
+
+
+  return (
+    <Snackbar
+      open={open} 
+      autoHideDuration={10000} 
+      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+      <Alert
+        onClose={() => setOpen(false)}
+        severity="success">
+        Thank you for contacting me.
+      </Alert>
+   </Snackbar>
+  )
+}
+
+
 
 const initialFormData = {
   name: '',
@@ -38,6 +66,7 @@ const initialError = {
 function ContactForm() {
   const [contactFormData, setContactFormData] = React.useState(initialFormData)
   const [errors, setErrors] = React.useState(initialError)
+  const [openSuccess, setOpenSuccess] = React.useState(false)
   const classes = useStyles()
 
   const handleChange = e => {
@@ -52,7 +81,8 @@ function ContactForm() {
     axiosInstance.post('contact/', contactFormData)
     .then(response => {
       setErrors({...initialError})
-      console.log(response)
+      setOpenSuccess(true)
+      // console.log(response)
     })
     .catch(error => {
       error.response &&
@@ -108,6 +138,7 @@ function ContactForm() {
           Submit
         </Button>
       </form>
+      <OpenSnackBar open={openSuccess} setOpen={setOpenSuccess} />
     </Grid>
   )
 }

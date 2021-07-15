@@ -1,11 +1,11 @@
 import React from 'react'
-import {ThemeProvider as MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles'
+import {ThemeProvider as MuiThemeProvider, createTheme} from '@material-ui/core/styles'
 import {GlobalContext} from './ContextApi'
 
 
 function ThemeProvider({children}) {
   const {darkMode} = GlobalContext()
-  const theme = createMuiTheme ({
+  const theme = createTheme ({
     palette: {
       type: darkMode ? "dark": "light",
       userBackground: {

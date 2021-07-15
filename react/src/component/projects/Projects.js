@@ -62,7 +62,7 @@ function Projects() {
           })
         }
       </Tabs>
-      <Grid container spacing={1} justify="center">
+      <Grid container spacing={1} justifyContent="center">
         {tabProject.map(project => {
           return (
               <ProjectCard key={project.slug} {...project}/>
