@@ -17,8 +17,8 @@ const useStyles = makeStyles(theme => ({
 const tabs = [
   'All',
   'Django',
-  'python',
-  'java',
+  'React',
+  'Python',
 
 ]
 

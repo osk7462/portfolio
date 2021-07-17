@@ -46,14 +46,15 @@ function Profile({image, description}) {
         />
       </Card>
       
-      <Typography 
+      {/* <Typography 
         variant="h4"
       > 
         who is this guy?
-      </Typography>
+      </Typography> */}
 
       <Typography
        variant="subtitle1"
+       align='left'
       > 
         {description}
       </Typography>

@@ -29,7 +29,7 @@ class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = ['slug', 'project', 'name', 'description',
-                  'link', 'project_images', 'project_skills', 'images', 'skills']
+                  'link', 'github', 'project_images', 'project_skills', 'images', 'skills']
         depth = 1
 
     def create(self, validated_data):

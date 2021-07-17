@@ -29,6 +29,7 @@ class Project(models.Model):
             instance.description = kwargs.get(
                 'description', instance.description)
             instance.link = kwargs.get('link', instance.link)
+            instance.github = kwargs.get('github', instance.github)
 
             instance.project_skills.clear()
             for skill in skills:
@@ -47,7 +48,8 @@ class Project(models.Model):
     project = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
     description = models.TextField()
-    link = models.URLField(max_length=200)
+    link = models.URLField(max_length=200, blank=True)
+    github = models.URLField(max_length=200, blank=True)
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='project_user')
     slug = models.SlugField(max_length=200)
