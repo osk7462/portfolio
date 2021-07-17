@@ -188,9 +188,9 @@ function AboutDialog({open, setOpen}) {
       formData.delete('resume')
     } 
 
-    for (let pair of formData.entries()) {
-      console.log(pair[0], pair[1])
-    }
+    // for (let pair of formData.entries()) {
+    //   console.log(pair[0], pair[1])
+    // }
 
     const config = {
       headers: {
@@ -200,8 +200,7 @@ function AboutDialog({open, setOpen}) {
         'Content-Type': 'multipart-form-data'
       }
     }
-    const url = `https://osk7462-api.herokuapp.com/about/$
-    {profileInput.id}/`
+    const url = `https://osk7462-api.herokuapp.com/about/${profileInput.id}/`
 
     axios.patch(url, formData, config)
     .then(response => setProfile(response.data))
@@ -222,7 +221,6 @@ function AboutDialog({open, setOpen}) {
         let tempProfileInput = {...profileInput}
         tempProfileInput.skills.splice(index,1)
         setProfileInput(tempProfileInput)
-        console.log(response.data)
     })
     .catch(err => console.log(err))
   }
