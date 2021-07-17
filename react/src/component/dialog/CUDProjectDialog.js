@@ -174,7 +174,8 @@ function CUDProjectDialog({open, setOpen, action}) {
       .then(response => {setLoadProject(prevState => (!prevState))})
       .catch(error => console.log(error))
     } else {
-      const url = `https://osk7462-api.herokuapp.com/projects/`
+      // const url = `https://osk7462-api.herokuapp.com/projects/`
+      const url = 'http://127.0.0.1:8000/projects/'
       axios.post(url, formData, config)
       .then(response => {setLoadProject(prevState => (!prevState))})
       .catch(error => console.log(error))
@@ -258,6 +259,18 @@ function CUDProjectDialog({open, setOpen, action}) {
                   inputProps={
                     update ? {
                       value: project.link,
+                      onChange: handleChange
+                    } : undefined
+                  }
+                  
+                />
+                 <TextField 
+                  fullWidth
+                  name="github"
+                  label="github"  
+                  inputProps={
+                    update ? {
+                      value: project.github,
                       onChange: handleChange
                     } : undefined
                   }
