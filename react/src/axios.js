@@ -23,16 +23,16 @@ axiosInstance.interceptors.response.use(
 		return response;
 	},
 	async function (error) {
-		const originalRequest = error.config;
-		if (typeof error.response === 'undefined') {
-			alert(
-				'A server/network error occurred. ' +
-					'Looks like CORS might be the problem. ' +
-					'Please refresh the page'
-			);
-			window.location.reload();
-			return Promise.reject(error);
-		}
+	// 	const originalRequest = error.config;
+	// 	if (typeof error.response === 'undefined') {
+	// 		alert(
+	// 			'A server/network error occurred. ' +
+	// 				'Looks like CORS might be the problem. ' +
+	// 				'Please refresh the page'
+	// 		);
+	// 		window.location.reload();
+	// 		return Promise.reject(error);
+		// }
 
 		if (
 			error.response.status === 401 &&
