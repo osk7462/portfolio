@@ -30,7 +30,7 @@ axiosInstance.interceptors.response.use(
 					'Looks like CORS might be the problem. ' +
 					'Please refresh the page'
 			);
-			window.location('/').reload();
+			window.location.reload();
 			return Promise.reject(error);
 		}
 
