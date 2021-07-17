@@ -9,6 +9,7 @@ import {makeStyles} from '@material-ui/core/styles'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import LaunchIcon from '@material-ui/icons/Launch';
+import GitHubIcon from '@material-ui/icons/GitHub';
 
 const useStyles = makeStyles(theme => ({
 //  these styles will be applied to materi
@@ -99,7 +100,7 @@ const useStyles = makeStyles(theme => ({
 
 
 function ProjectDialog(props) {
-  const {openDetail, setOpenDetail, project, name, description, project_images, link} = props
+  const {openDetail, setOpenDetail, project, name, description, project_images, link, github} = props
   const classes = useStyles()
   const [slideImage, setSlideImage] = React.useState(0)
 
@@ -176,14 +177,26 @@ function ProjectDialog(props) {
           {description}
         </Typography>
         <div className={classes.action}>
-          <Button
+          <div>
+            <Button
             variant="contained"
             color="secondary"
             startIcon={<LaunchIcon />}
             onClick={()=>window.open(link)}
-            > 
-             Visit Site
-          </Button>
+              > 
+              Visit Site
+            </Button>
+              <Button
+              variant="contained"
+              color="secondary"
+              startIcon={<GitHubIcon/>}
+              onClick={()=>window.open(github)}
+              style={{marginLeft: 10}}
+              > 
+              GitHub
+            </Button>
+          </div>
+         
 
           <Button 
           style={{fontSize: '1.2rem'}}
