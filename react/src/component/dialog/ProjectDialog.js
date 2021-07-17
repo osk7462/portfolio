@@ -178,14 +178,17 @@ function ProjectDialog(props) {
         </Typography>
         <div className={classes.action}>
           <div>
-            <Button
-            variant="contained"
-            color="secondary"
-            startIcon={<LaunchIcon />}
-            onClick={()=>window.open(link)}
-              > 
-              Visit Site
-            </Button>
+            {
+              link &&
+              <Button
+              variant="contained"
+              color="secondary"
+              startIcon={<LaunchIcon />}
+              onClick={()=>window.open(link)}
+                > 
+                Visit Site
+              </Button>
+            }
               <Button
               variant="contained"
               color="secondary"
