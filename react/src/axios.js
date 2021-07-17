@@ -23,7 +23,7 @@ axiosInstance.interceptors.response.use(
 		return response;
 	},
 	async function (error) {
-	// 	const originalRequest = error.config;
+		const originalRequest = error.config;
 	// 	if (typeof error.response === 'undefined') {
 	// 		alert(
 	// 			'A server/network error occurred. ' +
