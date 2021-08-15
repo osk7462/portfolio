@@ -35,30 +35,44 @@ export const AppProvider = ({children}) => {
   const[skills, setSkills] = React.useState([])
   const [loadProject, setLoadProject] = React.useState(false)
 
-  const  fetch = async () => {
-    await axiosInstance
-    .get('about/')
-    .then (response => {
-      setProfile({...response.data[0]})
-      setSkills(response.data[0].skills)
-      setLoading(false)
-    })
-    .catch (error => {
-      console.log("error loading profile", error.data)
+  const  customFetch = async () => {
+    const url ='https://osk7462-api.herokuapp.com/'
 
+    await fetch(url+'about')
+    .then(response => response.json())
+    .then(data => {
+      setProfile(data[0])
+      setSkills(data[0].skills)
     })
-    await axiosInstance.get('projects/')
-    .then(response => {
-      setLoading(true)
-      setProjects(response.data)
-      setLoading(false)
-    })
-    .catch(err => console.log('error loading projects', err))
+
+    await fetch(url+'projects')
+    .then(response => response.json())
+    .then(data => setProjects(data))
+
+    setLoading(false)
+    // await axiosInstance
+    // .get('about/')
+    // .then (response => {
+    //   setProfile({...response.data[0]})
+    //   setSkills(response.data[0].skills)
+    //   setLoading(false)
+    // })
+    // .catch (error => {
+    //   console.log("error loading profile", error.data)
+
+    // })
+  //   await axiosInstance.get('projects/')
+  //   .then(response => {
+  //     setLoading(true)
+  //     setProjects(response.data)
+  //     setLoading(false)
+  //   })
+  //   .catch(err => console.log('error loading projects', err))
   }
  
 
   React.useEffect(()=>{
-    fetch()
+    customFetch()
   },[loadProject])
 
 
